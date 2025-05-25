@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
-import { LinearGradient } from 'expo-linear-gradient';
 import { View, Dimensions, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -31,14 +30,13 @@ export default function TabLayout() {
           elevation: 16,
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 8 },
-          shadowOpacity: 0.4,
+          shadowOpacity: 0.1,
           shadowRadius: 16,
           paddingHorizontal: 0,
           marginHorizontal: 0,
         },
         tabBarBackground: () => (
-          <LinearGradient
-            colors={['rgba(30, 41, 59, 0.98)', 'rgba(51, 65, 85, 0.98)', 'rgba(71, 85, 105, 0.98)']}
+          <View
             style={{
               position: 'absolute',
               left: 0,
@@ -47,11 +45,14 @@ export default function TabLayout() {
               width: '100%',
               height: tabBarHeight,
               borderRadius: 25,
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              borderWidth: 1,
+              borderColor: 'rgba(0, 0, 0, 0.1)',
             }}
           />
         ),
         tabBarActiveTintColor: "#3B82F6",
-        tabBarInactiveTintColor: "rgba(255, 255, 255, 0.6)",
+        tabBarInactiveTintColor: "rgba(0, 0, 0, 0.6)",
         tabBarLabelStyle: {
           fontSize: Math.max(11, width * 0.03), // Responsive font size
           fontWeight: '600',
@@ -75,7 +76,7 @@ export default function TabLayout() {
           tabBarLabel: "Tasks",
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{
-              backgroundColor: focused ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+              backgroundColor: focused ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
               borderRadius: 20,
               padding: 8,
               minWidth: 40,
@@ -97,7 +98,7 @@ export default function TabLayout() {
           tabBarLabel: "Add",
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{
-              backgroundColor: focused ? 'rgba(59, 130, 246, 0.2)' : 'transparent',
+              backgroundColor: focused ? 'rgba(59, 130, 246, 0.1)' : 'transparent',
               borderRadius: 20,
               padding: 8,
               minWidth: 40,

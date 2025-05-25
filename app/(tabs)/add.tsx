@@ -199,13 +199,13 @@ export default function AddTaskScreen() {
     const borderColor = interpolateColor(
       inputFocus.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.8)']
+      ['rgba(0, 0, 0, 0.2)', 'rgba(59, 130, 246, 0.6)']
     );
 
     const backgroundColor = interpolateColor(
       inputFocus.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.2)']
+      ['rgba(0, 0, 0, 0.05)', 'rgba(59, 130, 246, 0.1)']
     );
 
     return {
@@ -217,11 +217,8 @@ export default function AddTaskScreen() {
 
   return (
     <View style={styles.fullScreenContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#1E293B" />
-      <LinearGradient
-        colors={['#1E293B', '#334155', '#475569', '#64748B']}
-        style={styles.container}
-      >
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+      <View style={styles.container}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboardContainer}
@@ -238,12 +235,9 @@ export default function AddTaskScreen() {
                   onPress={() => router.back()}
                   style={styles.backButton}
                 >
-                  <LinearGradient
-                    colors={['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.1)']}
-                    style={styles.backButtonGradient}
-                  >
-                    <MaterialIcons name="arrow-back" size={24} color="white" />
-                  </LinearGradient>
+                  <View style={styles.backButtonGradient}>
+                    <MaterialIcons name="arrow-back" size={24} color="#1F2937" />
+                  </View>
                 </Pressable>
                 
                 <View style={styles.headerTextContainer}>
@@ -255,20 +249,17 @@ export default function AddTaskScreen() {
 
             {/* Form */}
             <Animated.View style={[styles.formContainer, formAnimatedStyle]}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.15)', 'rgba(255, 255, 255, 0.05)']}
-                style={styles.formGradient}
-              >
+              <View style={styles.formGradient}>
                 <View style={styles.formContent}>
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Task Title</Text>
                     <Animated.View style={[styles.inputWrapper, inputAnimatedStyle]}>
-                      <MaterialIcons name="task-alt" size={20} color="rgba(255, 255, 255, 0.6)" />
+                      <MaterialIcons name="task-alt" size={20} color="rgba(0, 0, 0, 0.6)" />
                       <TextInput
                         value={title}
                         onChangeText={setTitle}
                         placeholder="Enter your task..."
-                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                        placeholderTextColor="rgba(0, 0, 0, 0.5)"
                         style={styles.textInput}
                         autoFocus
                         returnKeyType="done"
@@ -283,13 +274,10 @@ export default function AddTaskScreen() {
 
                   {error && (
                     <Animated.View style={styles.errorContainer}>
-                      <LinearGradient
-                        colors={['rgba(239, 68, 68, 0.3)', 'rgba(220, 38, 38, 0.2)']}
-                        style={styles.errorGradient}
-                      >
+                      <View style={styles.errorGradient}>
                         <MaterialIcons name="error-outline" size={20} color="#EF4444" />
                         <Text style={styles.errorText}>{error}</Text>
-                      </LinearGradient>
+                      </View>
                     </Animated.View>
                   )}
 
@@ -302,14 +290,10 @@ export default function AddTaskScreen() {
                         (loading || !title.trim()) && styles.disabledButton
                       ]}
                     >
-                      <LinearGradient
-                        colors={
-                          loading || !title.trim()
-                            ? ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']
-                            : ['#3B82F6', '#1D4ED8', '#1E40AF']
-                        }
-                        style={styles.submitButtonGradient}
-                      >
+                      <View style={[
+                        styles.submitButtonGradient,
+                        (loading || !title.trim()) && styles.disabledButtonGradient
+                      ]}>
                         {loading ? (
                           <ActivityIndicator color="white" size="small" />
                         ) : (
@@ -318,19 +302,16 @@ export default function AddTaskScreen() {
                             <Text style={styles.submitButtonText}>Create Task</Text>
                           </>
                         )}
-                      </LinearGradient>
+                      </View>
                     </Pressable>
                   </Animated.View>
                 </View>
-              </LinearGradient>
+              </View>
             </Animated.View>
 
             {/* Tips Section */}
             <Animated.View style={[styles.tipsContainer, formAnimatedStyle]}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.08)', 'rgba(255, 255, 255, 0.03)']}
-                style={styles.tipsGradient}
-              >
+              <View style={styles.tipsGradient}>
                 <View style={styles.tipsContent}>
                   <MaterialIcons name="lightbulb-outline" size={24} color="#3B82F6" />
                   <Text style={styles.tipsTitle}>Tips for better tasks</Text>
@@ -349,11 +330,11 @@ export default function AddTaskScreen() {
                     </View>
                   </View>
                 </View>
-              </LinearGradient>
+              </View>
             </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
-      </LinearGradient>
+      </View>
     </View>
   );
 }
@@ -367,6 +348,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: width,
+    backgroundColor: '#F8FAFC',
   },
   keyboardContainer: {
     flex: 1,
@@ -395,6 +377,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
   headerTextContainer: {
     flex: 1,
@@ -402,12 +385,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#1F2937',
     marginBottom: 4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#6B7280',
     fontWeight: '500',
   },
   formContainer: {
@@ -419,7 +402,8 @@ const styles = StyleSheet.create({
   formGradient: {
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
   },
   formContent: {
     padding: 25,
@@ -430,7 +414,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: '#1F2937',
     marginBottom: 12,
   },
   inputWrapper: {
@@ -445,7 +429,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: 'white',
+    color: '#1F2937',
     marginLeft: 12,
     textAlignVertical: 'top',
     fontWeight: '500',
@@ -459,6 +443,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
   },
   errorText: {
     color: '#EF4444',
@@ -479,9 +464,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     paddingHorizontal: 20,
+    backgroundColor: '#3B82F6',
   },
   disabledButton: {
     opacity: 0.6,
+  },
+  disabledButtonGradient: {
+    backgroundColor: '#9CA3AF',
   },
   submitButtonText: {
     color: 'white',
@@ -497,7 +486,8 @@ const styles = StyleSheet.create({
   tipsGradient: {
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   tipsContent: {
     padding: 20,
@@ -506,7 +496,7 @@ const styles = StyleSheet.create({
   tipsTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#1F2937',
     marginTop: 8,
     marginBottom: 16,
   },
@@ -522,12 +512,12 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    backgroundColor: '#6B7280',
     marginRight: 12,
   },
   tipText: {
     fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#6B7280',
     fontWeight: '500',
   },
 });

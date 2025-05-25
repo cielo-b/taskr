@@ -225,13 +225,13 @@ export default function EditTaskScreen() {
     const borderColor = interpolateColor(
       inputFocus.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.8)']
+      ['rgba(0, 0, 0, 0.2)', 'rgba(59, 130, 246, 0.6)']
     );
 
     const backgroundColor = interpolateColor(
       inputFocus.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.2)']
+      ['rgba(0, 0, 0, 0.05)', 'rgba(59, 130, 246, 0.1)']
     );
 
     return {
@@ -244,18 +244,15 @@ export default function EditTaskScreen() {
   if (loading) {
     return (
       <View style={styles.fullScreenContainer}>
-        <StatusBar barStyle="light-content" backgroundColor="#1E293B" />
-        <LinearGradient
-          colors={['#1E293B', '#334155', '#475569']}
-          style={styles.loadingContainer}
-        >
+        <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+        <View style={styles.loadingContainer}>
           <View style={styles.loadingContent}>
             <Animated.View style={styles.loadingSpinner}>
               <ActivityIndicator size="large" color="#3B82F6" />
             </Animated.View>
             <Text style={styles.loadingText}>Loading task...</Text>
           </View>
-        </LinearGradient>
+        </View>
       </View>
     );
   }
@@ -263,36 +260,27 @@ export default function EditTaskScreen() {
   if (error && !task) {
     return (
       <View style={styles.fullScreenContainer}>
-        <StatusBar barStyle="light-content" backgroundColor="#DC2626" />
-        <LinearGradient
-          colors={['#DC2626', '#EF4444', '#F87171']}
-          style={styles.errorContainer}
-        >
+        <StatusBar barStyle="dark-content" backgroundColor="#FEF2F2" />
+        <View style={styles.errorContainer}>
           <View style={styles.errorContent}>
-            <MaterialIcons name="error-outline" size={80} color="white" />
+            <MaterialIcons name="error-outline" size={80} color="#EF4444" />
             <Text style={styles.errorText}>{error}</Text>
             <Pressable style={styles.retryButton} onPress={fetchTask}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.1)']}
-                style={styles.retryButtonGradient}
-              >
+              <View style={styles.retryButtonGradient}>
                 <MaterialIcons name="refresh" size={24} color="white" />
                 <Text style={styles.retryButtonText}>Try Again</Text>
-              </LinearGradient>
+              </View>
             </Pressable>
           </View>
-        </LinearGradient>
+        </View>
       </View>
     );
   }
 
   return (
     <View style={styles.fullScreenContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#1E293B" />
-      <LinearGradient
-        colors={['#1E293B', '#334155', '#475569', '#64748B']}
-        style={styles.container}
-      >
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+      <View style={styles.container}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.keyboardContainer}
@@ -309,12 +297,9 @@ export default function EditTaskScreen() {
                   onPress={() => router.back()}
                   style={styles.backButton}
                 >
-                  <LinearGradient
-                    colors={['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.1)']}
-                    style={styles.backButtonGradient}
-                  >
-                    <MaterialIcons name="arrow-back" size={24} color="white" />
-                  </LinearGradient>
+                  <View style={styles.backButtonGradient}>
+                    <MaterialIcons name="arrow-back" size={24} color="#1F2937" />
+                  </View>
                 </Pressable>
                 
                 <View style={styles.headerTextContainer}>
@@ -326,20 +311,17 @@ export default function EditTaskScreen() {
 
             {/* Form */}
             <Animated.View style={[styles.formContainer, formAnimatedStyle]}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.15)', 'rgba(255, 255, 255, 0.05)']}
-                style={styles.formGradient}
-              >
+              <View style={styles.formGradient}>
                 <View style={styles.formContent}>
                   <View style={styles.inputContainer}>
                     <Text style={styles.label}>Task Title</Text>
                     <Animated.View style={[styles.inputWrapper, inputAnimatedStyle]}>
-                      <MaterialIcons name="task-alt" size={20} color="rgba(255, 255, 255, 0.6)" />
+                      <MaterialIcons name="task-alt" size={20} color="rgba(0, 0, 0, 0.6)" />
                       <TextInput
                         value={task}
                         onChangeText={setTask}
                         placeholder="Enter your task..."
-                        placeholderTextColor="rgba(255, 255, 255, 0.5)"
+                        placeholderTextColor="rgba(0, 0, 0, 0.5)"
                         style={styles.textInput}
                         returnKeyType="done"
                         onSubmitEditing={handleSubmit}
@@ -353,42 +335,36 @@ export default function EditTaskScreen() {
 
                   {/* Completion Status */}
                   <Animated.View style={[styles.switchContainer, switchAnimatedStyle]}>
-                    <LinearGradient
-                      colors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']}
-                      style={styles.switchGradient}
-                    >
+                    <View style={styles.switchGradient}>
                       <View style={styles.switchContent}>
                         <View style={styles.switchLabelContainer}>
                           <MaterialIcons 
                             name={completed ? "check-circle" : "radio-button-unchecked"} 
                             size={24} 
-                            color={completed ? "#10B981" : "rgba(255, 255, 255, 0.6)"} 
+                            color={completed ? "#10B981" : "rgba(0, 0, 0, 0.6)"} 
                           />
                           <Text style={styles.switchLabel}>Mark as completed</Text>
                         </View>
                         <Switch
                           value={completed}
                           onValueChange={setCompleted}
-                          thumbColor={completed ? "#10B981" : "rgba(255, 255, 255, 0.8)"}
+                          thumbColor={completed ? "#10B981" : "#F3F4F6"}
                           trackColor={{ 
-                            false: "rgba(255, 255, 255, 0.2)", 
+                            false: "rgba(0, 0, 0, 0.2)", 
                             true: "rgba(16, 185, 129, 0.3)" 
                           }}
-                          ios_backgroundColor="rgba(255, 255, 255, 0.2)"
+                          ios_backgroundColor="rgba(0, 0, 0, 0.2)"
                         />
                       </View>
-                    </LinearGradient>
+                    </View>
                   </Animated.View>
 
                   {error && (
                     <Animated.View style={styles.errorContainer}>
-                      <LinearGradient
-                        colors={['rgba(239, 68, 68, 0.3)', 'rgba(220, 38, 38, 0.2)']}
-                        style={styles.errorGradient}
-                      >
+                      <View style={styles.errorGradient}>
                         <MaterialIcons name="error-outline" size={20} color="#EF4444" />
                         <Text style={styles.errorText}>{error}</Text>
-                      </LinearGradient>
+                      </View>
                     </Animated.View>
                   )}
 
@@ -401,14 +377,10 @@ export default function EditTaskScreen() {
                         (submitting || !task.trim()) && styles.disabledButton
                       ]}
                     >
-                      <LinearGradient
-                        colors={
-                          submitting || !task.trim()
-                            ? ['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']
-                            : ['#10B981', '#059669', '#047857']
-                        }
-                        style={styles.submitButtonGradient}
-                      >
+                      <View style={[
+                        styles.submitButtonGradient,
+                        (submitting || !task.trim()) && styles.disabledButtonGradient
+                      ]}>
                         {submitting ? (
                           <ActivityIndicator color="white" size="small" />
                         ) : (
@@ -417,15 +389,15 @@ export default function EditTaskScreen() {
                             <Text style={styles.submitButtonText}>Update Task</Text>
                           </>
                         )}
-                      </LinearGradient>
+                      </View>
                     </Pressable>
                   </Animated.View>
                 </View>
-              </LinearGradient>
+              </View>
             </Animated.View>
           </ScrollView>
         </KeyboardAvoidingView>
-      </LinearGradient>
+      </View>
     </View>
   );
 }
@@ -439,6 +411,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: width,
+    backgroundColor: '#F8FAFC',
   },
   keyboardContainer: {
     flex: 1,
@@ -452,6 +425,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
+    backgroundColor: '#E2E8F0',
   },
   loadingContent: {
     alignItems: 'center',
@@ -460,7 +434,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   loadingText: {
-    color: 'white',
+    color: '#1F2937',
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 20,
@@ -473,13 +447,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 12,
     overflow: 'hidden',
+    backgroundColor: '#FEF2F2',
   },
   errorContent: {
     alignItems: 'center',
     padding: 20,
   },
   errorText: {
-    color: 'white',
+    color: '#DC2626',
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
@@ -489,6 +464,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
+    backgroundColor: 'rgba(239, 68, 68, 0.1)',
   },
   retryButton: {
     borderRadius: 25,
@@ -499,6 +475,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 12,
+    backgroundColor: '#EF4444',
   },
   retryButtonText: {
     color: 'white',
@@ -525,6 +502,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
   },
   headerTextContainer: {
     flex: 1,
@@ -532,12 +510,12 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#1F2937',
     marginBottom: 4,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#6B7280',
     fontWeight: '500',
   },
   formContainer: {
@@ -549,7 +527,8 @@ const styles = StyleSheet.create({
   formGradient: {
     borderRadius: 25,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
   },
   formContent: {
     padding: 25,
@@ -560,7 +539,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: '600',
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: '#1F2937',
     marginBottom: 12,
   },
   inputWrapper: {
@@ -575,7 +554,7 @@ const styles = StyleSheet.create({
   textInput: {
     flex: 1,
     fontSize: 16,
-    color: 'white',
+    color: '#1F2937',
     marginLeft: 12,
     textAlignVertical: 'top',
     fontWeight: '500',
@@ -588,22 +567,24 @@ const styles = StyleSheet.create({
   switchGradient: {
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
+    borderColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
   },
   switchContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
+    padding: 20,
   },
   switchLabelContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
   switchLabel: {
     fontSize: 16,
     fontWeight: '600',
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: '#1F2937',
     marginLeft: 12,
   },
   buttonContainer: {
@@ -619,9 +600,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     paddingHorizontal: 20,
+    backgroundColor: '#10B981',
   },
   disabledButton: {
     opacity: 0.6,
+  },
+  disabledButtonGradient: {
+    backgroundColor: '#9CA3AF',
   },
   submitButtonText: {
     color: 'white',

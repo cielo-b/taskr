@@ -12,7 +12,6 @@ import Animated, {
   withSequence,
   withDelay,
 } from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
@@ -93,13 +92,13 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onEdit, onD
     const backgroundColor = interpolateColor(
       completionProgress.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.15)', '#10B981']
+      ['rgba(0, 0, 0, 0.05)', '#10B981']
     );
 
     const borderColor = interpolateColor(
       completionProgress.value,
       [0, 1],
-      ['rgba(255, 255, 255, 0.4)', '#10B981']
+      ['rgba(0, 0, 0, 0.3)', '#10B981']
     );
 
     return {
@@ -131,21 +130,14 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onEdit, onD
 
   return (
     <Animated.View style={[styles.container, containerAnimatedStyle]}>
-      <LinearGradient
-        colors={todo.completed 
-          ? ['#10B981', '#059669', '#047857']
-          : ['#3B82F6', '#1D4ED8', '#1E40AF']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradientContainer}
-      >
+      <View style={[styles.gradientContainer, { backgroundColor: todo.completed ? '#10B981' : '#3B82F6' }]}>
         <View style={styles.innerContainer}>
           {/* Main Task Content */}
           <Pressable
             onPress={handlePress}
             style={styles.taskContent}
             android_ripple={{ 
-              color: 'rgba(255, 255, 255, 0.2)', 
+              color: 'rgba(0, 0, 0, 0.1)', 
               borderless: false,
             }}
           >
@@ -183,12 +175,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onEdit, onD
             </View>
 
             <View style={styles.priorityIndicator}>
-              <LinearGradient
-                colors={todo.completed 
-                  ? ['#10B981', '#059669'] 
-                  : ['#F59E0B', '#D97706']}
-                style={styles.priorityGradient}
-              />
+              <View style={[styles.priorityGradient, { backgroundColor: todo.completed ? '#10B981' : '#F59E0B' }]} />
             </View>
           </Pressable>
 
@@ -198,30 +185,24 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onEdit, onD
               onPress={() => onEdit(todo)}
               style={styles.actionButton}
             >
-              <LinearGradient
-                colors={['#3B82F6', '#1D4ED8']}
-                style={styles.actionButtonGradient}
-              >
+              <View style={[styles.actionButtonGradient, styles.editButton]}>
                 <MaterialIcons name="edit" size={getResponsiveSize(16, 18, 20)} color="white" />
                 <Text style={styles.actionButtonText}>Edit</Text>
-              </LinearGradient>
+              </View>
             </Pressable>
             
             <Pressable
               onPress={() => onDelete(todo.id)}
               style={styles.actionButton}
             >
-              <LinearGradient
-                colors={['#EF4444', '#DC2626']}
-                style={styles.actionButtonGradient}
-              >
+              <View style={[styles.actionButtonGradient, styles.deleteButton]}>
                 <MaterialIcons name="delete" size={getResponsiveSize(16, 18, 20)} color="white" />
                 <Text style={styles.actionButtonText}>Delete</Text>
-              </LinearGradient>
+              </View>
             </Pressable>
           </View>
         </View>
-      </LinearGradient>
+      </View>
     </Animated.View>
   );
 };
@@ -233,13 +214,8 @@ const styles = StyleSheet.create({
     marginBottom: getResponsiveSize(12, 16, 20),
   },
   gradientContainer: {
-    borderRadius: 0,
+    borderRadius: getResponsiveSize(12, 14, 16),
     overflow: 'hidden',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
   },
   innerContainer: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -362,7 +338,7 @@ const styles = StyleSheet.create({
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   actionButtonGradient: {
@@ -377,6 +353,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: getResponsiveSize(12, 14, 16),
     marginLeft: getResponsiveSize(4, 6, 8),
+  },
+  editButton: {
+    backgroundColor: '#3B82F6',
+  },
+  deleteButton: {
+    backgroundColor: '#EF4444',
   },
 });
 

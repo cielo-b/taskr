@@ -19,7 +19,6 @@ import Animated, {
   withDelay,
   withRepeat,
 } from 'react-native-reanimated';
-import { LinearGradient } from 'expo-linear-gradient';
 
 const { width, height } = Dimensions.get('window');
 
@@ -362,7 +361,7 @@ const TodoList = () => {
     const glowOpacity = interpolateColor(
       logoGlow.value,
       [0, 1],
-      ['rgba(59, 130, 246, 0.3)', 'rgba(59, 130, 246, 0.6)']
+      ['rgba(59, 130, 246, 0.2)', 'rgba(59, 130, 246, 0.4)']
     );
 
     return {
@@ -376,23 +375,18 @@ const TodoList = () => {
   if (loading && pagination.skip === 0 && !refreshing) {
     return (
       <View style={styles.fullScreenContainer}>
-        <StatusBar barStyle="light-content" backgroundColor="#1E293B" />
-        <LinearGradient
-          colors={['#1E293B', '#334155', '#475569']}
-          style={styles.loadingContainer}
-        >
-          <View style={styles.loadingContent}>
-            <Animated.View style={styles.loadingSpinner}>
-              <ActivityIndicator size="large" color="#3B82F6" />
-            </Animated.View>
-            <Text style={styles.loadingText}>Loading your tasks...</Text>
-            <View style={styles.loadingDots}>
-              <View style={[styles.dot, styles.dot1]} />
-              <View style={[styles.dot, styles.dot2]} />
-              <View style={[styles.dot, styles.dot3]} />
-            </View>
+        <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+        <View style={styles.loadingContainer}>
+          <Animated.View style={styles.loadingSpinner}>
+            <ActivityIndicator size="large" color="#3B82F6" />
+          </Animated.View>
+          <Text style={styles.loadingText}>Loading your tasks...</Text>
+          <View style={styles.loadingDots}>
+            <View style={[styles.dot, styles.dot1]} />
+            <View style={[styles.dot, styles.dot2]} />
+            <View style={[styles.dot, styles.dot3]} />
           </View>
-        </LinearGradient>
+        </View>
       </View>
     );
   }
@@ -400,49 +394,29 @@ const TodoList = () => {
   if (error && todos.length === 0) {
     return (
       <View style={styles.fullScreenContainer}>
-        <StatusBar barStyle="light-content" backgroundColor="#DC2626" />
-        <LinearGradient
-          colors={['#DC2626', '#EF4444', '#F87171']}
-          style={styles.errorContainer}
-        >
-          <View style={styles.errorContent}>
-            <MaterialIcons name="error-outline" size={80} color="white" />
-            <Text style={styles.errorText}>{error}</Text>
-            <Pressable style={styles.retryButton} onPress={() => fetchTodos(false)}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.3)', 'rgba(255, 255, 255, 0.1)']}
-                style={styles.retryButtonGradient}
-              >
-                <MaterialIcons name="refresh" size={24} color="white" />
-                <Text style={styles.retryButtonText}>Try Again</Text>
-              </LinearGradient>
-            </Pressable>
-          </View>
-        </LinearGradient>
+        <StatusBar barStyle="dark-content" backgroundColor="#EF4444" />
+        <View style={styles.errorContainer}>
+          <MaterialIcons name="error-outline" size={80} color="#EF4444" />
+          <Text style={styles.errorText}>{error}</Text>
+          <Pressable style={styles.retryButton} onPress={() => fetchTodos(false)}>
+            <Text style={styles.retryButtonText}>Try Again</Text>
+          </Pressable>
+        </View>
       </View>
     );
   }
 
   return (
     <View style={styles.fullScreenContainer}>
-      <StatusBar barStyle="light-content" backgroundColor="#1E293B" />
-      <LinearGradient
-        colors={['#1E293B', '#334155', '#475569', '#64748B']}
-        style={styles.backgroundGradient}
-      >
+      <StatusBar barStyle="dark-content" backgroundColor="#F8FAFC" />
+      <View style={styles.backgroundGradient}>
         {/* Logo Header */}
         <Animated.View style={[styles.logoContainer, logoAnimatedStyle]}>
-          <LinearGradient
-            colors={['#3B82F6', '#1D4ED8', '#1E40AF']}
-            style={styles.logoGradient}
-          >
+          <View style={styles.logoGradient}>
             <Text style={styles.logoText}>Taskr</Text>
-          </LinearGradient>
+          </View>
           <View style={styles.logoUnderline}>
-            <LinearGradient
-              colors={['#6366F1', '#8B5CF6', '#A855F7']}
-              style={styles.underlineGradient}
-            />
+            <View style={styles.underlineGradient} />
           </View>
         </Animated.View>
 
@@ -469,14 +443,11 @@ const TodoList = () => {
           )}
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
-              <LinearGradient
-                colors={['rgba(255, 255, 255, 0.1)', 'rgba(255, 255, 255, 0.05)']}
-                style={styles.emptyContent}
-              >
-                <MaterialIcons name="task-alt" size={80} color="rgba(255, 255, 255, 0.6)" />
+              <View style={styles.emptyContent}>
+                <MaterialIcons name="task-alt" size={80} color="rgba(0, 0, 0, 0.4)" />
                 <Text style={styles.emptyText}>No tasks yet</Text>
                 <Text style={styles.emptySubText}>Pull to refresh or add your first task!</Text>
-              </LinearGradient>
+              </View>
             </View>
           }
         />
@@ -488,12 +459,9 @@ const TodoList = () => {
           { bottom: fabBottomMargin }
         ]}>
           <Pressable onPress={handleAddTodo} style={styles.fabPressable}>
-            <LinearGradient
-              colors={['#3B82F6', '#1D4ED8', '#1E40AF']}
-              style={styles.fabGradient}
-            >
+            <View style={styles.fabGradient}>
               <MaterialIcons name="add" size={28} color="white" />
-            </LinearGradient>
+            </View>
           </Pressable>
         </Animated.View>
 
@@ -503,10 +471,7 @@ const TodoList = () => {
           { bottom: paginationBottomMargin },
           paginationAnimatedStyle
         ]}>
-          <LinearGradient
-            colors={['rgba(255, 255, 255, 0.15)', 'rgba(255, 255, 255, 0.05)']}
-            style={styles.paginationGradient}
-          >
+          <View style={styles.paginationGradient}>
             <Pressable
               onPress={() =>
                 setPagination(prev => ({
@@ -520,7 +485,7 @@ const TodoList = () => {
                 pagination.skip === 0 && styles.disabledButton
               ]}
             >
-              <MaterialIcons name="chevron-left" size={24} color="white" />
+              <MaterialIcons name="chevron-left" size={24} color="#1F2937" />
               <Text style={styles.paginationText}>Previous</Text>
             </Pressable>
 
@@ -541,9 +506,9 @@ const TodoList = () => {
               ]}
             >
               <Text style={styles.paginationText}>Next</Text>
-              <MaterialIcons name="chevron-right" size={24} color="white" />
+              <MaterialIcons name="chevron-right" size={24} color="#1F2937" />
             </Pressable>
-          </LinearGradient>
+          </View>
         </Animated.View>
 
         {/* Delete Confirmation Modal */}
@@ -555,10 +520,7 @@ const TodoList = () => {
         >
           <Animated.View style={[styles.modalBackdrop, modalBackdropStyle]}>
             <Animated.View style={[styles.modalContainer, modalAnimatedStyle]}>
-              <LinearGradient
-                colors={['#1E293B', '#334155', '#475569']}
-                style={styles.modalGradient}
-              >
+              <View style={styles.modalGradient}>
                 <View style={styles.modalContent}>
                   <MaterialIcons name="warning" size={60} color="#EF4444" />
                   <Text style={styles.modalTitle}>Delete Task</Text>
@@ -567,30 +529,20 @@ const TodoList = () => {
                   </Text>
                   
                   <View style={styles.modalButtons}>
-                    <Pressable style={styles.modalButton} onPress={cancelDelete}>
-                      <LinearGradient
-                        colors={['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.1)']}
-                        style={styles.modalButtonGradient}
-                      >
-                        <Text style={styles.modalButtonText}>Cancel</Text>
-                      </LinearGradient>
+                    <Pressable style={[styles.modalButton, styles.cancelButton]} onPress={cancelDelete}>
+                      <Text style={styles.modalButtonText}>Cancel</Text>
                     </Pressable>
                     
-                    <Pressable style={styles.modalButton} onPress={confirmDelete}>
-                      <LinearGradient
-                        colors={['#EF4444', '#DC2626']}
-                        style={styles.modalButtonGradient}
-                      >
-                        <Text style={styles.modalButtonText}>Delete</Text>
-                      </LinearGradient>
+                    <Pressable style={[styles.modalButton, styles.deleteButton]} onPress={confirmDelete}>
+                      <Text style={styles.modalButtonText}>Delete</Text>
                     </Pressable>
                   </View>
                 </View>
-              </LinearGradient>
+              </View>
             </Animated.View>
           </Animated.View>
         </Modal>
-      </LinearGradient>
+      </View>
     </View>
   );
 };
@@ -604,6 +556,7 @@ const styles = StyleSheet.create({
   backgroundGradient: {
     flex: 1,
     width: width,
+    backgroundColor: '#F8FAFC',
   },
   logoContainer: {
     alignItems: 'center',
@@ -615,10 +568,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 20,
+    backgroundColor: '#3B82F6',
     elevation: 8,
     shadowColor: '#3B82F6',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.3,
     shadowRadius: 12,
   },
   logoText: {
@@ -640,21 +594,20 @@ const styles = StyleSheet.create({
   underlineGradient: {
     flex: 1,
     borderRadius: 2,
+    backgroundColor: '#8B5CF6',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-  },
-  loadingContent: {
-    alignItems: 'center',
+    backgroundColor: '#E2E8F0',
   },
   loadingSpinner: {
     marginBottom: 20,
   },
   loadingText: {
-    color: 'white',
+    color: '#1F2937',
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 20,
@@ -666,7 +619,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     marginHorizontal: 4,
   },
   dot1: {
@@ -683,13 +636,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: width,
-  },
-  errorContent: {
-    alignItems: 'center',
+    backgroundColor: '#FEF2F2',
     padding: 20,
   },
   errorText: {
-    color: 'white',
+    color: '#DC2626',
     fontSize: 18,
     fontWeight: '600',
     textAlign: 'center',
@@ -698,8 +649,7 @@ const styles = StyleSheet.create({
   retryButton: {
     borderRadius: 25,
     overflow: 'hidden',
-  },
-  retryButtonGradient: {
+    backgroundColor: '#EF4444',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -725,15 +675,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
     borderRadius: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
   },
   emptyText: {
-    color: 'rgba(255, 255, 255, 0.9)',
+    color: '#1F2937',
     fontSize: 24,
     fontWeight: 'bold',
     marginTop: 20,
   },
   emptySubText: {
-    color: 'rgba(255, 255, 255, 0.7)',
+    color: '#6B7280',
     fontSize: 16,
     marginTop: 8,
     textAlign: 'center',
@@ -745,7 +696,7 @@ const styles = StyleSheet.create({
     elevation: 12,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.2,
     shadowRadius: 12,
   },
   fabPressable: {
@@ -758,6 +709,7 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#3B82F6',
   },
   paginationContainer: {
     position: 'absolute',
@@ -774,6 +726,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 15,
     height: 60,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   paginationButton: {
     flexDirection: 'row',
@@ -786,25 +741,25 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   paginationText: {
-    color: 'white',
+    color: '#1F2937',
     fontWeight: '600',
     marginHorizontal: 8,
     fontSize: 14,
   },
   pageIndicator: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 15,
   },
   pageInfo: {
-    color: 'white',
+    color: '#1F2937',
     fontWeight: '600',
     fontSize: 14,
   },
   modalBackdrop: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -815,11 +770,12 @@ const styles = StyleSheet.create({
     elevation: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 20,
   },
   modalGradient: {
     borderRadius: 20,
+    backgroundColor: '#FFFFFF',
   },
   modalContent: {
     padding: 30,
@@ -828,13 +784,13 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#1F2937',
     marginTop: 16,
     marginBottom: 12,
   },
   modalMessage: {
     fontSize: 16,
-    color: 'rgba(255, 255, 255, 0.8)',
+    color: '#6B7280',
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 30,
@@ -848,8 +804,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 12,
     overflow: 'hidden',
-  },
-  modalButtonGradient: {
     paddingVertical: 14,
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -858,6 +812,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600',
     fontSize: 16,
+  },
+  cancelButton: {
+    backgroundColor: '#6B7280',
+  },
+  deleteButton: {
+    backgroundColor: '#EF4444',
   },
 });
 

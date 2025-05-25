@@ -16,7 +16,7 @@ export default function RootLayout() {
         try {
           await NavigationBar.setVisibilityAsync('hidden');
           await NavigationBar.setBehaviorAsync('overlay-swipe');
-          await NavigationBar.setBackgroundColorAsync('#1E293B');
+          await NavigationBar.setBackgroundColorAsync('#F8FAFC');
         } catch (error) {
           console.log('Navigation bar configuration failed:', error);
         }
@@ -47,11 +47,11 @@ export default function RootLayout() {
         flex: 1, 
         width: width, 
         height: height,
-        backgroundColor: '#1E293B' 
+        backgroundColor: '#F8FAFC' 
       }}>
         <StatusBar 
-          barStyle="light-content" 
-          backgroundColor="#1E293B" 
+          barStyle="dark-content" 
+          backgroundColor="#F8FAFC" 
           translucent={true}
           hidden={false}
         />
@@ -59,7 +59,7 @@ export default function RootLayout() {
           screenOptions={{
             headerShown: false,
             contentStyle: {
-              backgroundColor: '#1E293B',
+              backgroundColor: '#F8FAFC',
               width: width,
               height: height,
             }
