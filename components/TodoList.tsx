@@ -361,7 +361,7 @@ const TodoList = () => {
     const glowOpacity = interpolateColor(
       logoGlow.value,
       [0, 1],
-      ['rgba(59, 130, 246, 0.2)', 'rgba(59, 130, 246, 0.4)']
+      ['rgba(59, 130, 246, 0.3)', 'rgba(59, 130, 246, 0.6)']
     );
 
     return {
